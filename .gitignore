@@ -1,3 +1,5 @@
 input_sample/
 .vscode/
 *.root
+traditionalRecon/
+reconstruction/
