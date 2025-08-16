@@ -3,3 +3,5 @@ input_sample/
 *.root
 traditionalRecon/
 reconstruction/
+*.csv
+*.png

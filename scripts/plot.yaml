@@ -1,0 +1,49 @@
+# ===== 顶层默认（可被 datasets 内覆写）=====
+tree: "cluster"
+branch_true: "true_eTot"
+true_scale: 1
+branch_e: "e"
+rec_scale: 1e-3
+method: "rms90"        # 可选: rms90 | std | gauss_fit
+min_per_bin: 50
+nboot: 200             # bootstrap 次数（0 表示不用）
+boot_frac: 1.0         # bootstrap 抽样比例（0-1]
+nbins_hist: 60
+seed: 42
+
+# ===== 多数据集：两条曲线 =====
+datasets:
+  - name: "opt"
+    inputs:
+      - "/st0/legacy/disk402/lhcb/songyx/WORK/ECAL_ML_Recon/Tuples/traditional_reconstruction_method/opt/*.root"
+    # 如需不同方法或缩放，在这里覆写：
+    # method: "rms90"
+    # rec_scale: 1e-3
+
+  - name: "3x3"
+    inputs:
+      # 这里放你的第二套 ROOT 样本（示例占位，可换成实际路径或正则）
+      - "/st0/legacy/disk402/lhcb/songyx/WORK/ECAL_ML_Recon/Tuples/traditional_reconstruction_method/3x3/*.root"
+    # 举例：第二条曲线使用高斯拟合
+    # method: "gauss_fit"
+
+# ===== 共享分 bin（方式A优先：自定义边界）=====
+binning:
+  edges: [0, 1, 2, 3, 5, 8, 10, 20, 35, 50, 75, 100]
+
+  # 方式B：等宽（若提供 edges 则忽略）
+  # nbins: 12
+  # emin: 1.0
+  # emax: 50.0
+
+# ===== 输出（共享坐标轴与标题）=====
+outputs:
+  out: "rel_res_dual.png"
+  csv: "rel_res_dual.csv"            # 合并 CSV（含 dataset 列）
+  csv_per_dataset: true              # 如需同时导出每条曲线的独立 CSV -> true
+  csv_pattern: "rel_res_{name}.csv"  # 单曲线 CSV 命名模式
+  title: "Relative Energy Resolution vs True Energy"
+  xlabel: "True energy (GeV)"
+  ylabel: "Relative energy resolution"
+  percent: true        # y 轴按百分比显示
+  show: false          # 是否弹出窗口显示
