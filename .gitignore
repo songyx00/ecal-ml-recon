@@ -5,3 +5,5 @@ traditionalRecon/
 reconstruction/
 *.csv
 *.png
+data/*
+scripts/convert_input/file.txt
